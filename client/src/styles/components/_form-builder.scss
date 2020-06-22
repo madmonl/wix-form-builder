@@ -1,0 +1,42 @@
+.form-builder {
+  width: 400px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.form-builder__title--input {
+  max-height: 56px;
+}
+
+.form-builder__title--button {
+  left: 50%;
+}
+
+.form-builder__title {
+  margin-bottom: $m-size;
+}
+
+.form-builder__card {
+  padding: $m-size;
+}
+
+.form-builder__row {
+  display: flex !important;
+  flex-direction: row !important;
+  margin-bottom: $m-size !important;
+}
+
+.form-builder__row--input {
+  margin-left: $m-size !important;
+}
+
+.form-builder__row--select {
+  width: 100px;
+}
+
+.form-builder__submit {
+  text-decoration: none;
+  color: $off-white;
+}

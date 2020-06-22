@@ -1,0 +1,17 @@
+#header {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.header__container {
+  width: 80%;
+  margin: auto;
+  padding: 0px !important;
+}
+
+.header__link {
+  text-decoration: none;
+  color: $off-white;
+  margin-left: 40px;
+  font-size: $font-size-large;
+}

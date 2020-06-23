@@ -17,10 +17,10 @@ function AppRouter() {
     <Router history={history}>
       <Switch>
         <PublicRoute path="/" component={Auth} exact />
-        <PrivateRoute path="/forms-list" component={FormsList} exact />
-        <PrivateRoute path="/form-builder" component={FormBuilder} exact />
-        <PrivateRoute path="/forms/submit/:formID" component={Submit} exact />
-        <PrivateRoute path="/forms/submissions/:formID" component={Submissions} exact />
+        <PrivateRoute path="/forms-list" component={FormsList} />
+        <PrivateRoute path="/form-builder" component={FormBuilder} />
+        <PrivateRoute path="/forms/submit/:formID" component={Submit} />
+        <PrivateRoute path="/forms/submissions/:formID" component={Submissions} />
         <Route component={NotFoundPage} />
       </Switch>
     </Router>

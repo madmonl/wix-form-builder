@@ -10,6 +10,36 @@ import { FormControl } from '@material-ui/core';
 import { selectForm, addFormSubmissionAsync } from '../formsList/FormsListSlice';
 import { Link } from 'react-router-dom';
 
+function renderFields(fields, handleChange, submission) {
+  return fields.map(({
+    label, name, inputType, id
+  }) => {
+    switch (inputType) {
+      case 'tel':
+      case 'email':
+      case 'number':
+      case 'text':
+      case 'date':
+      case 'color':
+        return (
+          <div key={id}>
+            <FormControl className="form-submit__card--question">
+              <InputLabel className="form-submit__input-label">{label}</InputLabel>
+              <Input
+                name={name}
+                type={inputType}
+                value={submission[id] || ""}
+                onChange={(event) => handleChange(event, id)}
+              />
+            </FormControl>
+          </div>
+        );
+      default:
+        return new TypeError(`Question with id: ${id} - has incorrect field`);
+    }
+  })
+}
+
 export default function Submit({ match }) {
   const dispatch = useDispatch();
   const { formID } = match.params;
@@ -38,33 +68,7 @@ export default function Submit({ match }) {
         <Typography className="form-submit__card--title">
           {title}
         </Typography>
-        {fields.map(({
-          label, name, inputType, id
-        }) => {
-          switch (inputType) {
-            case 'tel':
-            case 'email':
-            case 'number':
-            case 'text':
-            case 'date':
-            case 'color':
-              return (
-                <div key={id}>
-                  <FormControl className="form-submit__card--question">
-                    <InputLabel className="form-submit__input-label">{label}</InputLabel>
-                    <Input
-                      name={name}
-                      type={inputType}
-                      value={submission[id] || ""}
-                      onChange={(event) => handleChange(event, id)}
-                    />
-                  </FormControl>
-                </div>
-              );
-            default:
-              return new TypeError(`Question with id: ${id} - has incorrect field`);
-          }
-        })}
+        {renderFields(fields, handleChange, submission)}
         <Link className="link" onClick={handleSubmit} to="/forms-list">
           <Button className="button--link button--small" variant="contained">Submit</Button>
         </Link>

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { v4 as uuidv4 } from 'uuid';
 import { FormControl } from '@material-ui/core';
@@ -15,21 +14,25 @@ function renderFields(fields, handleChange, submission) {
     label, name, inputType, id
   }) => {
     switch (inputType) {
+      case 'date':
       case 'tel':
       case 'email':
       case 'number':
       case 'text':
-      case 'date':
       case 'color':
         return (
           <div key={id}>
-            <FormControl className="form-submit__card--question">
-              <InputLabel className="form-submit__input-label">{label}</InputLabel>
-              <Input
-                name={name}
+            <FormControl className="input--submit form-submit__card--question">
+              <TextField
+                id="standard-number"
+                label={label}
                 type={inputType}
-                value={submission[id] || ""}
+                value={submission[id]}
+                name={name}
                 onChange={(event) => handleChange(event, id)}
+                InputLabelProps={{
+                  shrink: true
+                }}
               />
             </FormControl>
           </div>
@@ -44,8 +47,13 @@ export default function Submit({ match }) {
   const dispatch = useDispatch();
   const { formID } = match.params;
   const { title, body } = useSelector((state) => selectForm(state, formID));
-  const [submission, setSubmission] = useState({});
   const fields = Object.values(body);
+  const initialSubmission = {};
+  for (let key of Object.keys(body)) {
+    initialSubmission[key] = "";
+  }
+
+  const [submission, setSubmission] = useState(initialSubmission);
 
   const handleChange = (event, id) => {
     setSubmission({

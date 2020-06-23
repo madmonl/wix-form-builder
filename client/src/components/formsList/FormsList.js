@@ -76,6 +76,7 @@ export default function FormsList() {
                     <Button 
                       className="button--link button--small" 
                       variant="contained"
+                      color="secondary"
                     >Submit</Button>
                   </Link></StyledTableCell>
                 <StyledTableCell className="forms-list__cell">
@@ -84,6 +85,7 @@ export default function FormsList() {
                     to={`/forms/submissions/${id}`}
                   >                  
                     <Button 
+                      color="secondary"
                       className="button--link button--small" 
                       variant="outlined"
                     >Submissions Page</Button>      

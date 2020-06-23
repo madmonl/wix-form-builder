@@ -144,7 +144,11 @@ export default function FormBuilder() {
           </FormControl>
         ))}
         <Link className="link" onClick={handleSubmit} to="/forms-list">
-          <Button className="button--link button--small" variant="contained">Submit</Button>
+          <Button
+            color="secondary" 
+            className="button--link button--small" 
+            variant="contained"
+          >Submit</Button>
         </Link>
       </Card>
     </div>

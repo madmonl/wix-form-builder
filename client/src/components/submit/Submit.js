@@ -70,7 +70,11 @@ export default function Submit({ match }) {
         </Typography>
         {renderFields(fields, handleChange, submission)}
         <Link className="link" onClick={handleSubmit} to="/forms-list">
-          <Button className="button--link button--small" variant="contained">Submit</Button>
+          <Button
+            color="secondary"
+            className="button--link button--small" 
+            variant="contained"
+          >Submit</Button>
         </Link>
       </Card>
     </div>

@@ -32,15 +32,26 @@ const {
 
 
 export const selectSubmissionsHeader = (state, id) => {
+  if (Object.keys(state.forms.value.forms).length === 0) {
+    return [];
+  }
+
   const { forms } = state.forms.value;
   const sortedKeys = Object.keys(forms[id].body).sort((a, b) => (a < b ? -1 : 1));
   const header = [];
-  sortedKeys.forEach((key) => header.push(forms[id].body[key].name));
+  sortedKeys.forEach((key, index) => header.push({
+    name: forms[id].body[key].name,
+    id: index
+  }));
 
   return header;
 };
 
 export const selectSubmissionsRows = (state, id) => {
+  if (Object.keys(state.forms.value.forms).length === 0) {
+    return [];
+  }
+
   const rows = [];
   state.forms.value.forms[id].submissions.forEach((submission) => {
     const sortedKeys = Object.keys(submission).sort((a, b) => (a < b ? -1 : 1));
@@ -49,13 +60,18 @@ export const selectSubmissionsRows = (state, id) => {
       row.push({ submission: submission[key], submissionID: key });
     });
 
-    rows.push({ row, rowID: submission.id });
+    rows.push({ row, id: submission.id });
   });
 
   return rows;
 };
 
-export const selectForm = (state, id) => state.forms.value.forms[id];
+export const selectForm = (state, id) => {
+  if (Object.keys(state.forms.value.forms).length === 0) {
+    return { title: '', body: {} }
+  }
+  return state.forms.value.forms[id];
+}
 
 export const selectForms = (state) => Object.values(state.forms.value.forms).map(({
   id,
@@ -69,8 +85,8 @@ export const selectForms = (state) => Object.values(state.forms.value.forms).map
 
 export function addFormAsync(form) {
   return async (dispatch) => {
-    await axios.post(`/api/forms/`, form);
-    return dispatch(addForm(form));
+    const res = await axios.post(`/api/forms/`, form);
+    return dispatch(addForm(res.data));
   }
 }
 
@@ -83,7 +99,7 @@ export function setFormsAsync() {
 
 export function addFormSubmissionAsync({ formID, submission }) {
   return async (dispatch) => {
-    const res = await axios.post(`/api/forms/submit/${formID}`, submission);
+    await axios.post(`/api/forms/submit/${formID}`, submission);
     return dispatch(addFormSubmission({ formID, submission }));
   }
 }

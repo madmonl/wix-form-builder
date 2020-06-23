@@ -22,7 +22,6 @@ app.get('/api/forms', (req, res) => db.ref('forms').once('value').then((snapshot
 
 app.post('/api/forms/submit/:id', (req, res) => {
   const submission = req.body;
-  console.log(submission);
   return db.ref(`forms/${req.params.id}/submissions`).push(submission).then(() => {
     res.json(req.body);
   });
@@ -30,13 +29,12 @@ app.post('/api/forms/submit/:id', (req, res) => {
 
 app.post('/api/forms/', (req, res) => {
   const form = req.body;
-  return db.ref('forms').push(form).then(() => {
-    res.json(form);
+  return db.ref('forms').push(form).then((snapshot) => {
+    res.json({ ...form, id: snapshot.key });
   });
 });
 
 app.get('*', (req, res) => {
-  console.log(`@@@@@@@@@@@@@@@@@@@@@@@@${__dirname}`);
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 

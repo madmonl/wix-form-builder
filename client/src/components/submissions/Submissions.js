@@ -46,16 +46,17 @@ export default function Submissions({ match }) {
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>
-              {header.map((name) => (
-                <StyledTableCell 
+              {header.map(({ name, id }) => (
+                <StyledTableCell
+                  key={id}
                   className="forms__table--header forms-list__cell"
                 >{name}</StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(({ row, rowID }) => (
-              <StyledTableRow key={rowID}>
+            {rows.map(({ row, id }) => (
+              <StyledTableRow key={id}>
                 {row.map(({ submission, submissionID }) => (
                   <StyledTableCell key={submissionID} component="th" scope="row">
                     {submission}

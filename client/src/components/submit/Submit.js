@@ -49,17 +49,17 @@ export default function Submit({ match }) {
             case 'date':
             case 'color':
               return (
-                <>
+                <div key={id}>
                   <FormControl className="form-submit__card--question">
                     <InputLabel className="form-submit__input-label">{label}</InputLabel>
                     <Input
                       name={name}
                       type={inputType}
-                      value={submission[id]}
+                      value={submission[id] || ""}
                       onChange={(event) => handleChange(event, id)}
                     />
                   </FormControl>
-                </>
+                </div>
               );
             default:
               return new TypeError(`Question with id: ${id} - has incorrect field`);
